@@ -1,14 +1,11 @@
 package com.chess.engine.board;
 
 import com.chess.engine.pieces.chessPiece;
-import com.sun.org.apache.xml.internal.security.utils.resolver.ResourceResolverException;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class chessTile {
-
     protected final int tileCoordinate;
     private static final Map<Integer, EmptyTile> EMPTY_TILES = createAllPossibleEmptyTiles();
 
@@ -21,7 +18,11 @@ public abstract class chessTile {
         return ImmutableMap.copyOf(emptyTileMap);
     }
 
-    chessTile(int tileCoordinate){
+    public static chessTile createTile(final int tileCoordinate, final chessPiece piece){
+    return piece != null ? new OccupiedTile(tileCoordinate, piece) : EMPTY_TILES.get(tileCoordinate);
+    }
+
+    private chessTile(int tileCoordinate){
         this.tileCoordinate=tileCoordinate;
     }
     public abstract boolean isTileOccupied();
